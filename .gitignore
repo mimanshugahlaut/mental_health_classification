@@ -1,0 +1,51 @@
+# ── Data ────────────────────────────────────────────────────────────────────
+data/raw/
+data/processed/
+
+# ── Model checkpoints (large files) ─────────────────────────────────────────
+checkpoints/
+*.bin
+*.pt
+*.pth
+*.safetensors
+
+# ── Experiment outputs ───────────────────────────────────────────────────────
+reports/results/
+reports/figures/
+wandb/
+mlruns/
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.so
+
+# ── Environments ─────────────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+.env
+
+# ── Secrets ──────────────────────────────────────────────────────────────────
+.env
+.kaggle/
+kaggle.json
+secrets.yaml
+*.key
+
+# ── Notebooks checkpoints ────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp

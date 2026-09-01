@@ -1,0 +1,22 @@
+# Experiment: MentalBERT Full Fine-Tuning
+experiment_name: "mental_bert_full_ft_focal_smooth"
+data:
+  path: "data/processed/mental_health_cleaned.csv"
+  text_col: "text"
+  label_col: "status"
+max_length: 256
+model:
+  key: "mental-bert"
+  use_lora: false
+  dropout: 0.1
+training:
+  epochs: 5
+  batch_size: 16
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  loss: "focal_smooth"
+  focal_gamma: 2.0
+  label_smoothing: 0.1
+seed: 42
+use_wandb: false

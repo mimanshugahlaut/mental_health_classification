@@ -1,0 +1,29 @@
+# Base configuration — shared across all experiments
+# Override specific keys in individual experiment configs.
+
+# ── Data ─────────────────────────────────────────────
+data:
+  path: "data/processed/mental_health_cleaned.csv"
+  text_col: "text"
+  label_col: "status"
+
+# ── Preprocessing ────────────────────────────────────
+max_length: 256     # Token sequence length. 256 covers ~95% of Reddit posts
+                    # without wasting VRAM on unnecessary padding.
+
+# ── Training defaults ────────────────────────────────
+training:
+  epochs: 5
+  batch_size: 16    # Per-device. Effective batch = 32 (gradient_accumulation=2)
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  loss: "focal_smooth"     # Options: ce | weighted_ce | focal | focal_smooth
+  focal_gamma: 2.0
+  label_smoothing: 0.1
+
+# ── Reproducibility ──────────────────────────────────
+seed: 42
+
+# ── Experiment tracking (optional) ───────────────────
+use_wandb: false   # Set to true if you have a wandb account

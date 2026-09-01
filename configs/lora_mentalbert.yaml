@@ -1,0 +1,23 @@
+# Experiment: MentalBERT + LoRA (rank=8)
+experiment_name: "mental_bert_lora_r8_focal_smooth"
+data:
+  path: "data/processed/mental_health_cleaned.csv"
+  text_col: "text"
+  label_col: "status"
+max_length: 256
+model:
+  key: "mental-bert"
+  use_lora: true
+  lora_rank: 8
+  dropout: 0.1
+training:
+  epochs: 5
+  batch_size: 16
+  learning_rate: 3.0e-4
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  loss: "focal_smooth"
+  focal_gamma: 2.0
+  label_smoothing: 0.1
+seed: 42
+use_wandb: false
