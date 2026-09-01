@@ -237,8 +237,8 @@ def build_ui() -> gr.Blocks:
         with gr.Accordion("ℹ️ About This Model", open=False):
             gr.Markdown(f"""
             **Model**: MentalRoBERTa + LoRA (rank=8)  
-            **Training**: 7-class mental health classification on Reddit data  
-            **Classes**: Normal, Depression, Anxiety, Bipolar, Stress, Personality Disorder, Suicidal  
+            **Training**: 6-class mental health classification on Reddit data  
+            **Classes**: Normal, Depression, Anxiety, Bipolar, Stress, Suicidal  
             **Loss Function**: Focal Loss + Label Smoothing  
             **Device**: {DEVICE.upper()}  
 

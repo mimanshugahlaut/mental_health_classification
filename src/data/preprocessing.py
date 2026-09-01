@@ -22,8 +22,7 @@ LABEL2ID = {
     "Anxiety": 2,
     "Bipolar": 3,
     "Stress": 4,
-    "Personality Disorder": 5,
-    "Suicidal": 6,
+    "Suicidal": 5,
 }
 
 ID2LABEL = {v: k for k, v in LABEL2ID.items()}
