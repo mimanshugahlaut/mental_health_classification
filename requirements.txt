@@ -42,6 +42,4 @@ ipywidgets>=8.1.0
 # App
 gradio>=4.30.0
 
-# Notebook
-jupyter>=1.0.0
-ipykernel>=6.29.0
+
