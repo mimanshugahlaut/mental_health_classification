@@ -31,7 +31,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.data.preprocessing import preprocess_dataframe, compute_class_weights
 from src.data.dataset import build_datasets
-from src.models.classifier import load_model
+from src.models.classifier import load_model, count_parameters
 from src.training.trainer import MentalHealthTrainer, build_training_args
 from src.evaluation.metrics import compute_metrics, full_evaluation_report
 
@@ -67,7 +67,7 @@ def main(config_path: str) -> None:
     df = preprocess_dataframe(
         df,
         text_col=cfg["data"].get("text_col", "text"),
-        label_col=cfg["data"].get("label_col", "status"),
+        label_col=cfg["data"].get("label_col", "label_name"),
     )
 
     # ── 2. Split data (stratified) ───────────────────────────────────────────
@@ -144,8 +144,12 @@ def main(config_path: str) -> None:
     # ── 8. Final test evaluation ─────────────────────────────────────────────
     print("\n[Step 8] Final evaluation on test set...")
     results = full_evaluation_report(model, test_dataset, trainer, split_name="test")
+    total_params, trainable_params = count_parameters(model)
     results["experiment_name"] = experiment_name
     results["training_minutes"] = round(training_time / 60, 1)
+    results["total_params"] = total_params
+    results["trainable_params"] = trainable_params
+    results["trainable_params_pct"] = round(100.0 * trainable_params / total_params, 2) if total_params > 0 else 0
     results["config"] = cfg
 
     # ── 9. Save results ──────────────────────────────────────────────────────

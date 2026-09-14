@@ -5,7 +5,7 @@
 [![HuggingFace](https://img.shields.io/badge/🤗-Transformers-yellow.svg)](https://huggingface.co/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **Research Project** — Solo work by [Your Name], B.E. CSE (AI&ML), Chandigarh University.
+> **Research Project** — Work by Shreyansh Gupta, Mimanshu Gahlaut, and Ranjan Walia, AIT-CSE, Chandigarh University.
 > Accompanying paper: *"Parameter-Efficient Domain Adaptation with Explainability Analysis for Multi-Class Mental Health Classification on Social Media"*
 
 ---
@@ -106,8 +106,8 @@ mental health/
 
 ```bash
 # Clone the repo
-git clone https://github.com/[your-username]/mental-health-classification
-cd mental-health-classification
+git clone https://github.com/mimanshugahlaut/mental_health_classification
+cd mental_health_classification
 
 # Create virtual environment
 python -m venv venv
@@ -161,10 +161,10 @@ python app.py
 ## Citation
 
 ```bibtex
-@article{[yourname]2026mentalscope,
+@article{gupta2026mentalscope,
   title={Parameter-Efficient Domain Adaptation with Explainability Analysis 
          for Multi-Class Mental Health Classification on Social Media},
-  author={[Your Full Name]},
+  author={Gupta, Shreyansh and Gahlaut, Mimanshu and Walia, Ranjan},
   year={2026}
 }
 ```

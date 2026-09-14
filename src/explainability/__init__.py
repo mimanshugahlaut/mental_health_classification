@@ -3,4 +3,5 @@ from src.explainability.shap_analysis import (
     compute_shap_values,
     extract_top_markers,
     plot_global_importance,
+    plot_instance_explanation,
 )

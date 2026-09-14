@@ -38,18 +38,27 @@ def main():
                     "Training Time (min)": "-",
                 })
         else:
+            params_str = "-"
+            if "trainable_params" in data and isinstance(data["trainable_params"], (int, float)):
+                pct = data.get("trainable_params_pct", "")
+                pct_str = f" ({pct}%)" if pct != "" else ""
+                params_str = f"{data['trainable_params']:,}{pct_str}"
+            elif "trainable_params" in data:
+                params_str = str(data["trainable_params"])
+
             rows.append({
                 "Experiment": data.get("experiment_name", f.stem),
                 "Accuracy": data.get("accuracy", "-"),
                 "Macro F1": data.get("macro_f1", "-"),
                 "Weighted F1": data.get("weighted_f1", "-"),
                 "MCC": data.get("mcc", "-"),
-                "Trainable Params": "-",
+                "Trainable Params": params_str,
                 "Training Time (min)": data.get("training_minutes", "-"),
             })
 
     df = pd.DataFrame(rows)
-    df = df.sort_values("Macro F1", ascending=False)
+    sort_col = pd.to_numeric(df["Macro F1"], errors="coerce")
+    df = df.iloc[sort_col.fillna(-1).argsort()[::-1]].reset_index(drop=True)
 
     # Save CSV
     csv_path = Path("reports/results_summary.csv")
@@ -58,10 +67,21 @@ def main():
 
     # Save Markdown table
     md_path = Path("reports/results_summary.md")
-    with open(md_path, "w") as f:
+    with open(md_path, "w", encoding="utf-8") as f:
         f.write("# MentalScope — Experiment Results Summary\n\n")
-        f.write(df.to_markdown(index=False))
-        f.write("\n\n*Primary metric: Macro F1 (macro-averaged F1 over all 7 classes)*\n")
+        try:
+            f.write(df.to_markdown(index=False))
+        except (ImportError, Exception):
+            # Fallback when tabulate is not installed
+            headers = list(df.columns)
+            header_line = "| " + " | ".join(headers) + " |"
+            separator_line = "| " + " | ".join(["---"] * len(headers)) + " |"
+            rows_lines = [
+                "| " + " | ".join(str(val) for val in row) + " |"
+                for row in df.itertuples(index=False)
+            ]
+            f.write("\n".join([header_line, separator_line] + rows_lines))
+        f.write("\n\n*Primary metric: Macro F1 (macro-averaged F1 over all 6 classes)*\n")
     print(f"[Aggregate] Saved markdown: {md_path}")
 
     # Print to console

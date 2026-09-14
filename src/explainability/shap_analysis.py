@@ -132,6 +132,7 @@ def plot_global_importance(
         print(f"[SHAP] Saved global importance plot: {save_path}")
 
     plt.show()
+    plt.close()
 
 
 def plot_instance_explanation(
@@ -148,17 +149,19 @@ def plot_instance_explanation(
         shap_values: SHAP Explanation from compute_shap_values.
         sample_idx: Index of the sample in the explanations.
         class_name: Class to explain contributions for.
-        save_path: Optional path to save the figure.
+        save_path: Optional path to save the HTML visualization.
     """
     class_idx = {v: k for k, v in ID2LABEL.items()}.get(class_name, 0)
     sample_explanation = shap_values[sample_idx, :, class_idx]
 
-    shap.plots.text(sample_explanation, display=False)
+    html_content = shap.plots.text(sample_explanation, display=False)
 
     if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")
-        print(f"[SHAP] Saved instance explanation: {save_path}")
-    plt.show()
+        with open(save_path, "w", encoding="utf-8") as f:
+            f.write(html_content if isinstance(html_content, str) else str(html_content))
+        print(f"[SHAP] Saved instance explanation HTML to: {save_path}")
+    else:
+        shap.plots.text(sample_explanation)
 
 
 def extract_top_markers(

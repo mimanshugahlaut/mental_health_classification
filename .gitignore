@@ -12,6 +12,9 @@ checkpoints/
 # ── Experiment outputs ───────────────────────────────────────────────────────
 reports/results/
 reports/figures/
+reports/paper/
+reports/*.csv
+reports/*.md
 wandb/
 mlruns/
 

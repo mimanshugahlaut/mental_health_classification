@@ -125,20 +125,21 @@ class FocalLossWithLabelSmoothing(nn.Module):
         gamma: float = 2.0,
         smoothing: float = 0.1,
         alpha: Optional[torch.Tensor] = None,
+        reduction: str = "mean",
     ):
         super().__init__()
         self.gamma = gamma
         self.smoothing = smoothing
         self.alpha = alpha
+        self.reduction = reduction
 
     def forward(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
         num_classes = logits.size(-1)
 
-        # Smooth targets: (1 - ε) * one_hot + ε / C
+        # Smooth targets: (1 - ε) * one_hot + ε / C (sums exactly to 1.0)
         with torch.no_grad():
-            smooth_labels = torch.zeros_like(logits)
-            smooth_labels.fill_(self.smoothing / num_classes)
-            smooth_labels.scatter_(1, labels.unsqueeze(1), 1.0 - self.smoothing)
+            one_hot = torch.zeros_like(logits).scatter_(1, labels.unsqueeze(1), 1.0)
+            smooth_labels = (1.0 - self.smoothing) * one_hot + (self.smoothing / num_classes)
 
         log_probs = F.log_softmax(logits, dim=-1)
         probs = torch.exp(log_probs)
@@ -156,7 +157,12 @@ class FocalLossWithLabelSmoothing(nn.Module):
         ce_loss = -(smooth_labels * log_probs).sum(dim=-1)  # (B,)
         loss = focal_weight * ce_loss
 
-        return loss.mean()
+        if self.reduction == "mean":
+            return loss.mean()
+        elif self.reduction == "sum":
+            return loss.sum()
+        else:
+            return loss
 
 
 # ── Loss factory ─────────────────────────────────────────────────────────────

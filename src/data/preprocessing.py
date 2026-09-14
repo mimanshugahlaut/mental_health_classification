@@ -54,10 +54,13 @@ def remove_reddit_markup(text: str) -> str:
 def remove_excessive_punctuation(text: str) -> str:
     """
     Reduce repeated punctuation (e.g. '!!!!!!' -> '!').
-    We preserve single instances — they carry emotional signal.
+    We preserve single instances and ellipses ('...') — they carry emotional signal.
     """
-    text = re.sub(r"([!?.]){2,}", r"\1", text)
-    text = re.sub(r"[.]{2,}", "...", text)  # Preserve ellipsis
+    # First normalize ellipsis (2 or more dots -> standard '...')
+    text = re.sub(r"\.{2,}", "...", text)
+    # Reduce repeated exclamation and question marks
+    text = re.sub(r"!{2,}", "!", text)
+    text = re.sub(r"\?{2,}", "?", text)
     return text
 
 
@@ -70,18 +73,19 @@ def normalize_whitespace(text: str) -> str:
 
 def clean_text(
     text: str,
-    remove_urls: bool = True,
-    remove_reddit_markup: bool = True,
+    strip_urls: bool = True,
+    strip_reddit_markup: bool = True,
     lowercase: bool = False,  # NOTE: False by default — BERT has cased variants
     min_length: int = 10,
+    **kwargs,
 ) -> Optional[str]:
     """
     Full cleaning pipeline for a single text.
 
     Args:
         text: Raw Reddit post text.
-        remove_urls: Strip URLs.
-        remove_reddit_markup: Strip Reddit-specific markup.
+        strip_urls: Strip URLs.
+        strip_reddit_markup: Strip Reddit-specific markup.
         lowercase: Lowercase text. Keep False for cased transformers.
         min_length: Minimum character length after cleaning.
 
@@ -91,13 +95,19 @@ def clean_text(
     if not isinstance(text, str) or len(text.strip()) == 0:
         return None
 
+    # Backward compatibility with remove_urls / remove_reddit_markup kwargs
+    if "remove_urls" in kwargs:
+        strip_urls = kwargs["remove_urls"]
+    if "remove_reddit_markup" in kwargs:
+        strip_reddit_markup = kwargs["remove_reddit_markup"]
+
     text = normalize_unicode(text)
 
-    if remove_urls:
-        text = globals()["remove_urls"](text)
+    if strip_urls:
+        text = remove_urls(text)
 
-    if remove_reddit_markup:
-        text = globals()["remove_reddit_markup"](text)
+    if strip_reddit_markup:
+        text = remove_reddit_markup(text)
 
     text = remove_excessive_punctuation(text)
     text = normalize_whitespace(text)
@@ -135,7 +145,31 @@ def preprocess_dataframe(
         label_map = LABEL2ID
 
     df = df.copy()
-    df = df.rename(columns={text_col: "text", label_col: "label_name"})
+
+    # Smart column resolution: handle varying column names across raw vs processed data
+    if text_col not in df.columns:
+        for candidate in ["text", "statement", "post", "body"]:
+            if candidate in df.columns:
+                text_col = candidate
+                break
+
+    if label_col not in df.columns:
+        for candidate in ["label_name", "status", "label", "category"]:
+            if candidate in df.columns:
+                label_col = candidate
+                break
+
+    if text_col not in df.columns or label_col not in df.columns:
+        raise ValueError(
+            f"Required columns not found in DataFrame. Available columns: {list(df.columns)}. "
+            f"Expected text column '{text_col}' and label column '{label_col}'."
+        )
+
+    # If df already has 'text' or 'label_name', rename safely without collisions
+    if text_col != "text":
+        df = df.rename(columns={text_col: "text"})
+    if label_col != "label_name":
+        df = df.rename(columns={label_col: "label_name"})
 
     # Drop rows with missing text or label
     df = df.dropna(subset=["text", "label_name"])
@@ -145,7 +179,7 @@ def preprocess_dataframe(
     df = df.dropna(subset=["text"])  # Remove rows where cleaning returned None
 
     # Normalize label names (strip whitespace, title case)
-    df["label_name"] = df["label_name"].str.strip()
+    df["label_name"] = df["label_name"].astype(str).str.strip().str.title()
 
     # Keep only known labels
     known_labels = set(label_map.keys())
@@ -172,11 +206,18 @@ def compute_class_weights(df: pd.DataFrame, label_col: str = "label") -> np.ndar
         numpy array of shape (num_classes,) with weights ordered by label id.
     """
     from sklearn.utils.class_weight import compute_class_weight
-    classes = np.array(sorted(df[label_col].unique()))
-    weights = compute_class_weight(
+    unique_classes = np.array(sorted(df[label_col].unique()))
+    weights_computed = compute_class_weight(
         class_weight="balanced",
-        classes=classes,
+        classes=unique_classes,
         y=df[label_col].values,
     )
-    print(f"[Class Weights] {dict(zip(classes, weights.round(4)))}")
+
+    # Ensure weights array length matches NUM_LABELS to avoid dimension mismatch
+    num_classes = max(NUM_LABELS, int(unique_classes.max()) + 1)
+    weights = np.ones(num_classes, dtype=np.float32)
+    for cls_idx, w in zip(unique_classes, weights_computed):
+        weights[int(cls_idx)] = w
+
+    print(f"[Class Weights] {dict(zip(unique_classes, weights_computed.round(4)))}")
     return weights.astype(np.float32)

@@ -6,7 +6,7 @@ experiment_name: "bert_base_full_ft_ce"
 data:
   path: "data/processed/mental_health_cleaned.csv"
   text_col: "text"
-  label_col: "status"
+  label_col: "label_name"
 
 max_length: 256
 

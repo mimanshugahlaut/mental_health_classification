@@ -8,6 +8,7 @@ plus a flexible factory function for custom configurations.
 
 from __future__ import annotations
 
+from typing import Optional
 from peft import LoraConfig, TaskType
 
 
@@ -85,7 +86,3 @@ def get_lora_config(
     )
 
     return config
-
-
-# ── Optional: add None to handle the typing annotation above ─────────────────
-from typing import Optional  # noqa: E402 (put here to avoid circular at top)

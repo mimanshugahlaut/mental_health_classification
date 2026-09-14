@@ -39,7 +39,6 @@ LABEL_COLORS = {
     "Depression":           "#2196F3",   # Blue
     "Bipolar":              "#9C27B0",   # Purple
     "Stress":               "#FF5722",   # Deep Orange
-    "Personality Disorder": "#795548",   # Brown
     "Suicidal":             "#F44336",   # Red
 }
 
@@ -49,7 +48,6 @@ LABEL_EMOJIS = {
     "Depression":           "😔",
     "Bipolar":              "🔄",
     "Stress":               "😤",
-    "Personality Disorder": "🧩",
     "Suicidal":             "🆘",
 }
 
@@ -103,17 +101,29 @@ cls_pipeline = load_pipeline()
 
 # ── Prediction function ───────────────────────────────────────────────────────
 
-def classify_text(text: str) -> Tuple[Dict, str, str]:
+def classify_text(text: str) -> Tuple[Dict, str]:
     """
     Run classification on input text and return formatted outputs.
 
     Returns:
         - label_confidences: Dict for Gradio Label component
-        - predicted_label: Top predicted class name
         - result_html: Formatted HTML output block
     """
     if not text or len(text.strip()) < 10:
-        return {}, "Please enter more text (at least 10 characters).", ""
+        warning_html = """
+        <div style="
+            border-left: 5px solid #ff9800;
+            padding: 14px 18px;
+            border-radius: 8px;
+            background: #fff8e1;
+            margin-top: 10px;
+        ">
+            <p style="margin: 0; color: #e65100; font-weight: 500;">
+                ⚠️ Please enter more text (at least 10 characters) for accurate classification.
+            </p>
+        </div>
+        """
+        return {}, warning_html
 
     text = text.strip()
 
@@ -157,7 +167,7 @@ def classify_text(text: str) -> Tuple[Dict, str, str]:
     </div>
     """
 
-    return label_confidences, predicted_label, result_html
+    return label_confidences, result_html
 
 
 # ── Gradio UI ─────────────────────────────────────────────────────────────────
@@ -229,7 +239,7 @@ def build_ui() -> gr.Blocks:
                 result_html_out = gr.HTML(label="Prediction")
                 confidence_chart = gr.Label(
                     label="Class Confidence Scores",
-                    num_top_classes=7,
+                    num_top_classes=6,
                 )
 
         # Model info
@@ -253,7 +263,7 @@ def build_ui() -> gr.Blocks:
         classify_btn.click(
             fn=classify_text,
             inputs=[text_input],
-            outputs=[confidence_chart, gr.Textbox(visible=False), result_html_out],
+            outputs=[confidence_chart, result_html_out],
         )
         clear_btn.click(
             fn=lambda: ("", {}, ""),
@@ -263,7 +273,7 @@ def build_ui() -> gr.Blocks:
         text_input.submit(
             fn=classify_text,
             inputs=[text_input],
-            outputs=[confidence_chart, gr.Textbox(visible=False), result_html_out],
+            outputs=[confidence_chart, result_html_out],
         )
 
     return demo
