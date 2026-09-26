@@ -12,27 +12,27 @@
 
 ## Overview
 
-MentalScope is a rigorous empirical study comparing **LoRA (Parameter-Efficient Fine-Tuning)** against **full fine-tuning** on both general-purpose and domain-specific transformer models for 7-class mental health text classification on Reddit data.
+MentalScope is a rigorous empirical study comparing **LoRA (Parameter-Efficient Fine-Tuning)** against **full fine-tuning** on both general-purpose and domain-specific transformer models for 6-class mental health text classification on Reddit data.
 
 **Novel Contributions:**
 1. First systematic LoRA vs. full fine-tuning comparison on domain-specific mental health transformers (MentalBERT, MentalRoBERTa)
 2. Class-imbalance-aware training with Focal Loss ablation study
 3. SHAP-based explainability analysis of learned mental health linguistic markers
 
-**Classes:** `Depression` · `Anxiety` · `Bipolar` · `Stress` · `Personality Disorder` · `Suicidal` · `Normal`
+**Classes:** `Depression` · `Anxiety` · `Bipolar` · `Stress` · `Suicidal` · `Normal`
 
 ---
 
 ## Results Summary
 
-| Model | Accuracy | Macro F1 | Trainable Params |
-|-------|----------|----------|-----------------|
-| SVM + TF-IDF (baseline) | - | - | - |
-| BERT-base Full FT | - | - | 109M |
-| MentalBERT Full FT | - | - | 109M |
-| **MentalRoBERTa + LoRA + Focal Loss** | **-** | **-** | **~0.6M** |
+| Model | Accuracy | Macro F1 | Trainable Params | Training Time |
+|-------|----------|----------|------------------|---------------|
+| SVM + TF-IDF (baseline) | 77.74% | 75.24% | - | - |
+| BERT-base Full FT | 83.68% | 83.22% | 109.5M (100%) | 33.2 min |
+| MentalBERT Full FT + Focal | **83.36%** | **83.85%** | 109.5M (100%) | 38.0 min |
+| **MentalRoBERTa + LoRA + Focal** | 82.32% | 82.41% | **~0.89M (0.71%)**| **13.3 min** |
 
-*Results to be filled after experiments. See `reports/results_summary.md`*
+*Detailed results can be found in `MentalHealth_Classification/results/all_experiments_comparison.csv`*
 
 ---
 
