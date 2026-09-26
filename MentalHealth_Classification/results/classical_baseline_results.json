@@ -1,0 +1,53 @@
+[
+  {
+    "experiment_name": "logistic_regression_tfidf",
+    "accuracy": 0.7737,
+    "macro_f1": 0.7538,
+    "weighted_f1": 0.7731,
+    "mcc": 0.7075,
+    "per_class_f1": {
+      "Normal": 0.91,
+      "Depression": 0.7,
+      "Anxiety": 0.81,
+      "Bipolar": 0.79,
+      "Stress": 0.62,
+      "Suicidal": 0.7
+    },
+    "type": "Classical ML",
+    "method": "TF-IDF + Logistic Regression"
+  },
+  {
+    "experiment_name": "linear_svm_tfidf",
+    "accuracy": 0.7774,
+    "macro_f1": 0.7524,
+    "weighted_f1": 0.7754,
+    "mcc": 0.7065,
+    "per_class_f1": {
+      "Normal": 0.92,
+      "Depression": 0.71,
+      "Anxiety": 0.81,
+      "Bipolar": 0.79,
+      "Stress": 0.61,
+      "Suicidal": 0.68
+    },
+    "type": "Classical ML",
+    "method": "TF-IDF + Linear SVM"
+  },
+  {
+    "experiment_name": "random_forest_tfidf",
+    "accuracy": 0.7063,
+    "macro_f1": 0.6214,
+    "weighted_f1": 0.6908,
+    "mcc": 0.6055,
+    "per_class_f1": {
+      "Normal": 0.86,
+      "Depression": 0.66,
+      "Anxiety": 0.65,
+      "Bipolar": 0.64,
+      "Stress": 0.32,
+      "Suicidal": 0.59
+    },
+    "type": "Classical ML",
+    "method": "TF-IDF + Random Forest"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "model": "Logistic Regression + TF-IDF",
+    "accuracy": 0.7753,
+    "macro_f1": 0.7503,
+    "weighted_f1": 0.7745,
+    "mcc": 0.7098,
+    "classification_report": "              precision    recall  f1-score   support\n\n      Normal       0.90      0.92      0.91      2398\n  Depression       0.80      0.62      0.70      2310\n     Anxiety       0.77      0.83      0.80       575\n     Bipolar       0.74      0.79      0.76       417\n      Stress       0.53      0.72      0.61       388\n    Suicidal       0.67      0.76      0.71      1597\n\n    accuracy                           0.78      7685\n   macro avg       0.74      0.78      0.75      7685\nweighted avg       0.78      0.78      0.77      7685\n",
+    "trainable_params": "N/A"
+  },
+  {
+    "model": "Linear SVM + TF-IDF",
+    "accuracy": 0.7738,
+    "macro_f1": 0.749,
+    "weighted_f1": 0.7719,
+    "mcc": 0.702,
+    "classification_report": "              precision    recall  f1-score   support\n\n      Normal       0.89      0.94      0.91      2398\n  Depression       0.74      0.68      0.71      2310\n     Anxiety       0.80      0.82      0.81       575\n     Bipolar       0.83      0.76      0.80       417\n      Stress       0.61      0.57      0.59       388\n    Suicidal       0.66      0.70      0.68      1597\n\n    accuracy                           0.77      7685\n   macro avg       0.75      0.75      0.75      7685\nweighted avg       0.77      0.77      0.77      7685\n",
+    "trainable_params": "N/A"
+  },
+  {
+    "model": "Random Forest + TF-IDF",
+    "accuracy": 0.7037,
+    "macro_f1": 0.6192,
+    "weighted_f1": 0.6879,
+    "mcc": 0.6019,
+    "classification_report": "              precision    recall  f1-score   support\n\n      Normal       0.79      0.95      0.87      2398\n  Depression       0.58      0.76      0.66      2310\n     Anxiety       0.90      0.51      0.65       575\n     Bipolar       0.97      0.45      0.61       417\n      Stress       0.94      0.21      0.35       388\n    Suicidal       0.69      0.50      0.58      1597\n\n    accuracy                           0.70      7685\n   macro avg       0.81      0.56      0.62      7685\nweighted avg       0.73      0.70      0.69      7685\n",
+    "trainable_params": "N/A"
+  }
+]
