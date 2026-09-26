@@ -54,8 +54,6 @@ mental_health_classification/
 ├── data/                      # Local dataset folder (downloaded from Kaggle, gitignored)
 │   ├── raw/                   # Raw sentiment-analysis CSV
 │   └── processed/             # Cleaned & processed CSV dataset
-├── reports/
-│   └── results/               # Baseline results (classical ML)
 ├── scripts/
 │   ├── prepare_data.py        # Data cleaning and preprocessing pipeline
 │   ├── run_baselines.py       # Classical baseline runner (Linear SVM, Logistic Regression, RF)
