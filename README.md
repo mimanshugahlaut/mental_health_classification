@@ -39,34 +39,35 @@ MentalScope is a rigorous empirical study comparing **LoRA (Parameter-Efficient 
 ## Project Structure
 
 ```text
-mental health/
-├── data/
-│   ├── raw/                   # Raw downloaded datasets
-│   └── processed/             # Cleaned, split datasets
-├── src/
-│   ├── data/                  # PyTorch datasets and preprocessing
-│   ├── models/                # LoRA configs and classifiers
-│   ├── training/              # HF trainer and custom losses
-│   ├── evaluation/            # F1, MCC, and confusion matrix metrics
-│   └── explainability/        # SHAP and attention visualizations
-├── scripts/
-│   ├── prepare_data.py        # Data preparation script
-│   ├── run_baselines.py       # Classical ML baselines runner
-│   ├── run_experiment.py      # Transformer experiment runner
-│   └── aggregate_results.py   # Results aggregation script
-├── configs/
-│   ├── base_config.yaml       # Shared hyperparameters
-│   ├── full_ft_*.yaml         # Full fine-tuning configs
-│   └── lora_*.yaml            # LoRA fine-tuning configs
-├── reports/
-│   ├── results_summary.md     # Final results table
-│   └── paper/                 # LaTeX paper source
-│       ├── main.tex
-│       ├── references.bib
-│       └── figures/           # Paper figures (plots, SHAP)
+mental_health_classification/
+├── MentalHealth_Classification/
+│   ├── analysis/              # Comparison plots & SHAP explainability figures
+│   │   ├── plots/             # Accuracy, F1, MCC metric charts
+│   │   └── shap_figures/      # Per-class SHAP global importance plots
+│   └── results/               # Experiment metrics (CSV, JSON) & model comparison plot
 ├── app/
-│   └── app.py                 # Gradio demo app
-├── MentalHealth_Classification/ # Local output (ignored in git)
+│   └── app.py                 # Gradio interactive web demo
+├── configs/
+│   ├── base_config.yaml       # Shared training & model hyperparameters
+│   ├── full_ft_*.yaml         # Full fine-tuning configurations (BERT, MentalBERT)
+│   └── lora_*.yaml            # LoRA fine-tuning configurations (BERT, MentalBERT, MentalRoBERTa)
+├── data/                      # Local dataset folder (downloaded from Kaggle, gitignored)
+│   ├── raw/                   # Raw sentiment-analysis CSV
+│   └── processed/             # Cleaned & processed CSV dataset
+├── reports/
+│   └── results/               # Baseline results (classical ML)
+├── scripts/
+│   ├── prepare_data.py        # Data cleaning and preprocessing pipeline
+│   ├── run_baselines.py       # Classical baseline runner (Linear SVM, Logistic Regression, RF)
+│   ├── run_experiment.py      # Transformer training and LoRA experiment runner
+│   └── aggregate_results.py   # Aggregates evaluation results across all runs
+├── src/
+│   ├── data/                  # PyTorch Dataset classes and preprocessing pipelines
+│   ├── models/                # Classification model architecture and LoRA adapters
+│   ├── training/              # Custom Trainer, Focal Loss, and Label Smoothing
+│   ├── evaluation/            # Metrics computation (Macro F1, per-class F1, MCC)
+│   └── explainability/        # SHAP explainer implementation
+├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
