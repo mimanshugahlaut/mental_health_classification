@@ -1,4 +1,5 @@
 # ── Data ────────────────────────────────────────────────────────────────────
+data/
 data/raw/
 data/processed/
 
@@ -10,14 +11,14 @@ checkpoints/
 *.safetensors
 
 # ── Experiment outputs ───────────────────────────────────────────────────────
-reports/results/
 reports/figures/
 reports/paper/
-MentalHealth_Classification/
 reports/*.csv
 reports/*.md
 wandb/
 mlruns/
+gradio_demo/
+MentalHealth_Classification/gradio_demo/
 
 # ── Python ───────────────────────────────────────────────────────────────────
 __pycache__/

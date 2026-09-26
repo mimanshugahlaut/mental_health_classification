@@ -90,11 +90,14 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Download Data
+### 2. Dataset & Preprocessing
 
+The dataset is hosted on Kaggle:
+- **Kaggle Dataset**: [Sentiment Analysis for Mental Health](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health)
+
+Download the dataset, place the raw CSV at `data/raw/mental_health.csv`, and run the preprocessing pipeline:
 ```bash
-# Download from Kaggle (requires kaggle API key)
-python scripts/download_data.py
+python scripts/prepare_data.py
 ```
 
 ### 3. Run a Single Experiment

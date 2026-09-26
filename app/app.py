@@ -254,8 +254,7 @@ def build_ui() -> gr.Blocks:
             **Paper**: *Parameter-Efficient Domain Adaptation with Explainability Analysis 
             for Multi-Class Mental Health Classification on Social Media*
 
-            **Code**: [GitHub](https://github.com/mimanshugahlaut/mental_health_classification) · **Dataset**: Mental Health Condition 
-            Classification (Kaggle)
+            **Code**: [GitHub](https://github.com/mimanshugahlaut/mental_health_classification) · **Dataset**: [Kaggle](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health)
             """)
 
         # Event handlers
