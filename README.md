@@ -38,63 +38,36 @@ MentalScope is a rigorous empirical study comparing **LoRA (Parameter-Efficient 
 
 ## Project Structure
 
-```
+```text
 mental health/
 ├── data/
-│   ├── raw/                   # Downloaded datasets (gitignored)
-│   ├── processed/             # Cleaned, split datasets
-│   └── README.md              # Dataset documentation
+│   ├── raw/                   # Raw downloaded datasets
+│   └── processed/             # Cleaned, split datasets
 ├── src/
-│   ├── data/
-│   │   ├── __init__.py
-│   │   ├── dataset.py         # PyTorch Dataset classes
-│   │   ├── preprocessing.py   # Text cleaning pipeline
-│   │   └── dataloader.py      # DataLoader factory
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── classifier.py      # Classification head + model wrapper
-│   │   └── lora_config.py     # LoRA configuration factory
-│   ├── training/
-│   │   ├── __init__.py
-│   │   ├── trainer.py         # HuggingFace Trainer setup
-│   │   ├── losses.py          # Focal Loss + Label Smoothing
-│   │   └── callbacks.py       # Custom training callbacks
-│   ├── evaluation/
-│   │   ├── __init__.py
-│   │   └── metrics.py         # Macro F1, per-class F1, MCC, confusion matrix
-│   └── explainability/
-│       ├── __init__.py
-│       ├── shap_analysis.py   # SHAP value computation
-│       └── attention_viz.py   # Attention visualization
-├── notebooks/
-│   ├── 01_eda.ipynb           # Exploratory Data Analysis
-│   ├── 02_preprocessing.ipynb # Data cleaning walkthrough
-│   ├── 03_training.ipynb      # Training experiments (Colab-ready)
-│   ├── 04_evaluation.ipynb    # Results analysis + plots
-│   └── 05_explainability.ipynb # SHAP + attention visualization
+│   ├── data/                  # PyTorch datasets and preprocessing
+│   ├── models/                # LoRA configs and classifiers
+│   ├── training/              # HF trainer and custom losses
+│   ├── evaluation/            # F1, MCC, and confusion matrix metrics
+│   └── explainability/        # SHAP and attention visualizations
 ├── scripts/
-│   ├── download_data.py       # Dataset download utility
-│   ├── run_experiment.py      # Single experiment runner
-│   └── run_all_experiments.py # Full experiment matrix runner
+│   ├── prepare_data.py        # Data preparation script
+│   ├── run_baselines.py       # Classical ML baselines runner
+│   ├── run_experiment.py      # Transformer experiment runner
+│   └── aggregate_results.py   # Results aggregation script
 ├── configs/
 │   ├── base_config.yaml       # Shared hyperparameters
-│   ├── full_ft_bert.yaml      # BERT full fine-tuning config
-│   ├── lora_bert.yaml         # BERT + LoRA config
-│   ├── full_ft_mentalbert.yaml
-│   ├── lora_mentalbert.yaml
-│   ├── full_ft_roberta.yaml
-│   ├── lora_roberta.yaml
-│   ├── full_ft_mentalroberta.yaml
-│   └── lora_mentalroberta.yaml
+│   ├── full_ft_*.yaml         # Full fine-tuning configs
+│   └── lora_*.yaml            # LoRA fine-tuning configs
 ├── reports/
 │   ├── results_summary.md     # Final results table
-│   ├── figures/               # All paper figures (PNG/PDF)
 │   └── paper/                 # LaTeX paper source
+│       ├── main.tex
+│       ├── references.bib
+│       └── figures/           # Paper figures (plots, SHAP)
 ├── app/
-│   ├── app.py                 # Gradio demo app
-│   └── requirements_app.txt
+│   └── app.py                 # Gradio demo app
+├── MentalHealth_Classification/ # Local output (ignored in git)
 ├── requirements.txt
-├── setup.py
 └── README.md
 ```
 
