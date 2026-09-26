@@ -1,0 +1,96 @@
+{
+  "accuracy": 0.8368,
+  "macro_f1": 0.8322,
+  "weighted_f1": 0.8376,
+  "mcc": 0.7858,
+  "per_class_f1": {
+    "Normal": 0.954,
+    "Depression": 0.7778,
+    "Anxiety": 0.8883,
+    "Bipolar": 0.8589,
+    "Stress": 0.7732,
+    "Suicidal": 0.741
+  },
+  "confusion_matrix": [
+    [
+      2290,
+      16,
+      9,
+      2,
+      59,
+      23
+    ],
+    [
+      40,
+      1729,
+      7,
+      13,
+      17,
+      504
+    ],
+    [
+      13,
+      18,
+      501,
+      21,
+      20,
+      2
+    ],
+    [
+      3,
+      42,
+      12,
+      347,
+      11,
+      1
+    ],
+    [
+      26,
+      17,
+      24,
+      8,
+      312,
+      1
+    ],
+    [
+      30,
+      314,
+      0,
+      1,
+      0,
+      1253
+    ]
+  ],
+  "classification_report": "              precision    recall  f1-score   support\n\n      Normal       0.95      0.95      0.95      2399\n  Depression       0.81      0.75      0.78      2310\n     Anxiety       0.91      0.87      0.89       575\n     Bipolar       0.89      0.83      0.86       416\n      Stress       0.74      0.80      0.77       388\n    Suicidal       0.70      0.78      0.74      1598\n\n    accuracy                           0.84      7686\n   macro avg       0.83      0.83      0.83      7686\nweighted avg       0.84      0.84      0.84      7686\n",
+  "experiment_name": "bert_base_full_ft_ce",
+  "training_minutes": 33.2,
+  "total_params": 109486854,
+  "trainable_params": 109486854,
+  "trainable_params_pct": 100.0,
+  "config": {
+    "experiment_name": "bert_base_full_ft_ce",
+    "data": {
+      "path": "data/processed/mental_health_cleaned.csv",
+      "text_col": "text",
+      "label_col": "label_name"
+    },
+    "max_length": 256,
+    "model": {
+      "key": "bert",
+      "use_lora": false,
+      "dropout": 0.1
+    },
+    "training": {
+      "epochs": 5,
+      "batch_size": 16,
+      "learning_rate": 2e-05,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1,
+      "loss": "ce",
+      "focal_gamma": 2.0,
+      "label_smoothing": 0.1
+    },
+    "seed": 42,
+    "use_wandb": false
+  }
+}

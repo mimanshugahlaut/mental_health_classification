@@ -1,0 +1,40 @@
+MentalScope Gradio Demo
+========================
+
+Model:
+MentalRoBERTa + LoRA
+Checkpoint:
+checkpoint-5200
+
+Base Model:
+mental/mental-roberta-base
+
+LoRA:
+Rank: 8
+Alpha: 16
+Dropout: 0.1
+Target Modules: query, value
+
+Classes:
+0 = Normal
+1 = Depression
+2 = Anxiety
+3 = Bipolar
+4 = Stress
+5 = Suicidal
+
+Python packages:
+gradio==6.26.0
+transformers==5.16.1
+torch==2.11.0+cpu
+peft==0.20.0
+
+Inference:
+Device: CPU
+Max Length: 256
+
+Checkpoint Location:
+MyDrive/MentalHealth_Classification/checkpoints/mental_roberta_lora_r8_focal_smooth/checkpoint-5200
+
+Public Demo:
+https://a25c7a8ec7c0b48936.gradio.live/
