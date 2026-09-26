@@ -198,7 +198,6 @@ def build_ui() -> gr.Blocks:
             <h1>🧠 MentalScope</h1>
             <p style="color: #666; margin: 0;">
                 Parameter-Efficient Mental Health Text Classification
-                <br><small>Research Demo — B.E. CSE (AI&ML), Chandigarh University</small>
             </p>
         </div>
         """)
@@ -255,7 +254,7 @@ def build_ui() -> gr.Blocks:
             **Paper**: *Parameter-Efficient Domain Adaptation with Explainability Analysis 
             for Multi-Class Mental Health Classification on Social Media*
 
-            **Code**: [GitHub](https://github.com) · **Dataset**: Mental Health Condition 
+            **Code**: [GitHub](https://github.com/mimanshugahlaut/mental_health_classification) · **Dataset**: Mental Health Condition 
             Classification (Kaggle)
             """)
 
