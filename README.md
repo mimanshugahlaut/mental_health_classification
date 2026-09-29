@@ -5,9 +5,6 @@
 [![HuggingFace](https://img.shields.io/badge/🤗-Transformers-yellow.svg)](https://huggingface.co/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **Research Project** — Work by Shreyansh Gupta, Mimanshu Gahlaut, and Ranjan Walia, AIT-CSE, Chandigarh University.
-> Accompanying paper: *"Parameter-Efficient Domain Adaptation with Explainability Analysis for Multi-Class Mental Health Classification on Social Media"*
-
 ---
 
 ## Overview
@@ -129,19 +126,6 @@ All notebooks in `notebooks/` are Colab-ready. Start with:
 cd app
 pip install -r requirements_app.txt
 python app.py
-```
-
----
-
-## Citation
-
-```bibtex
-@article{gupta2026mentalscope,
-  title={Parameter-Efficient Domain Adaptation with Explainability Analysis 
-         for Multi-Class Mental Health Classification on Social Media},
-  author={Gupta, Shreyansh and Gahlaut, Mimanshu and Walia, Ranjan},
-  year={2026}
-}
 ```
 
 ---
